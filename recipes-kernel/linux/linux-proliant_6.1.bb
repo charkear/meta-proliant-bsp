@@ -1,3 +1,5 @@
+KBRANCH ?= "rl300-linux"
+
 require recipes-kernel/linux/linux-yocto.inc
 
 SRCREV ?= "d650f111528925b36a30a602529b3fe7788e6505"

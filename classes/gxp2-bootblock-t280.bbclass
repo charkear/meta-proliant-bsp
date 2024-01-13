@@ -11,12 +11,12 @@ do_deploy () {
   install -d ${DEPLOYDIR}
 
   # Copy in the bootblock
-  install -m 644 GXP2loader-t277-t280-t285-sgn00.bin ${DEPLOYDIR}/bootblock.bin
+  install -m 644 GXP2loader-t277-t280-t285-sgn00.bin ${DEPLOYDIR}/gxp2loader.bin
 
   # Copy in files from the files subdirectory
-  install -m 644 ${HPE_GXP_KEY_FILES_DIR}/uboot-sig.crt ${DEPLOYDIR}
+  install -m 644 ${HPE_GXP_KEY_FILES_DIR}/hpe-uboot-header-512.section ${DEPLOYDIR}
 
   # Copy in the U-Boot signing key
-  install -m 644 ${HPE_GXP_KEY_FILES_DIR}/uboot-sig.key ${DEPLOYDIR}
+  install -m 644 ${HPE_GXP_KEY_FILES_DIR}/hpe-uboot-signing-key.pem ${DEPLOYDIR}
 
 }
