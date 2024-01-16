@@ -38,7 +38,7 @@ HPE_GXP_BOOTBLOCK_IMAGE ?= "gxp2loader.bin"
 HPE_UBOOT_SIGNING_HEADER_512 ?= "hpe-uboot-header-512.section"
 HPE_UBOOT_SIGNING_KEY ?= "hpe-uboot-signing-key.pem"
 
-generate_rom_image() {
+do_generate_rom_image() {
     # Extract uboot 256K
     dd if=/dev/zero bs=1k count=256 > ${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin
     dd bs=1k conv=notrunc seek=0 count=256 \
@@ -93,9 +93,9 @@ generate_rom_image() {
     # offset at 0x01c0_0000 / 1024 = 28672
     FLASH_UBOOT2_OFFSET="28672"
 
-    dd if=/dev/zero of=image.bin bs=1k count=32768
+    dd if=/dev/zero of=${DEPLOY_DIR_IMAGE}/image.bin bs=1k count=32768
     dd bs=1k conv=notrunc seek=$FLASH_UBOOT_OFFSET if=${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin of=${DEPLOY_DIR_IMAGE}/image.bin
-    dd bs=1k conv=notrunc seek=$FLASH_KERNEL_OFFSET if=fitImage-proliant-image-proliant-yocto-proliant-yocto of=${DEPLOY_DIR_IMAGE}/image.bin
+    dd bs=1k conv=notrunc seek=$FLASH_KERNEL_OFFSET if=${DEPLOY_DIR_IMAGE}/fitImage-proliant-image-proliant-yocto-proliant-yocto of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_UBOOT2_OFFSET if=${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_SECTION_OFFSET if=${DEPLOY_DIR_IMAGE}/hpe-section of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_SECTION2_OFFSET if=${DEPLOY_DIR_IMAGE}/hpe-section2 of=${DEPLOY_DIR_IMAGE}/image.bin
@@ -108,4 +108,4 @@ generate_rom_image() {
        ${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin
 }
 
-addtask generate_rom_image after do_image_complete
+addtask generate_rom_image after do_image_complete before do_build
