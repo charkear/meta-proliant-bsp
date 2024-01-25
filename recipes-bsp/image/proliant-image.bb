@@ -95,7 +95,7 @@ do_generate_rom_image() {
 
     dd if=/dev/zero of=${DEPLOY_DIR_IMAGE}/image.bin bs=1k count=32768
     dd bs=1k conv=notrunc seek=$FLASH_UBOOT_OFFSET if=${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin of=${DEPLOY_DIR_IMAGE}/image.bin
-    dd bs=1k conv=notrunc seek=$FLASH_KERNEL_OFFSET if=${DEPLOY_DIR_IMAGE}/fitImage-proliant-image-proliant-yocto-proliant-yocto of=${DEPLOY_DIR_IMAGE}/image.bin
+    dd bs=1k conv=notrunc seek=$FLASH_KERNEL_OFFSET if=${DEPLOY_DIR_IMAGE}/fitImage-${INITRAMFS_IMAGE_NAME}-${MACHINE} of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_UBOOT2_OFFSET if=${DEPLOY_DIR_IMAGE}/u-boot-tmp.bin of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_SECTION_OFFSET if=${DEPLOY_DIR_IMAGE}/hpe-section of=${DEPLOY_DIR_IMAGE}/image.bin
     dd bs=1k conv=notrunc seek=$FLASH_SECTION2_OFFSET if=${DEPLOY_DIR_IMAGE}/hpe-section2 of=${DEPLOY_DIR_IMAGE}/image.bin
@@ -109,3 +109,5 @@ do_generate_rom_image() {
 }
 
 addtask generate_rom_image after do_image_complete before do_build
+
+do_generate_rom_image[depends] = "virtual/kernel:do_deploy"
