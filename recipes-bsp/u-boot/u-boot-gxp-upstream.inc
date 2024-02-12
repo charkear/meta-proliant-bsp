@@ -14,7 +14,7 @@ BRANCH ?= "gxp2-upstream"
 
 # We use the revision in order to avoid having to fetch it from the
 # repo during parse
-SRCREV = "d0d42b55373dc460aba7ab5f67c31946bbdf65d0"
+SRCREV = "75914ed32e027c6bc528ff4c2f39608a48f2aa31"
 
 SRC_URI = "git://git@github.com/charkear/u-boot.git;protocol=ssh;branch=${BRANCH}"
 
